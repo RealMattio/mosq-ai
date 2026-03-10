@@ -29,6 +29,7 @@ import struct
 import zlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+import numpy as np
 
 import pandas as pd
 import requests
@@ -135,8 +136,7 @@ def classify_df(df: pd.DataFrame) -> pd.DataFrame:
     df["target_class"] = pd.Categorical(
         pd.Series(pd.NA, index=df.index, dtype=object)
     )
-    import numpy as np
-    result = np.select(conditions, choices, default=pd.NA)
+    result = np.select(conditions, choices, default=pd.NA) # type: ignore
     df["target_class"] = result
     return df
 
@@ -153,7 +153,7 @@ def select_image_files(
     df = pd.read_csv(
         METADATA_PATH,
         sep="\t",
-        usecols=lambda c: c.strip().lower() in TSV_COLS,
+        usecols=lambda c: c.strip().lower() in TSV_COLS, # type: ignore
         dtype=str,
         low_memory=False,
     )

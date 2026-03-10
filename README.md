@@ -146,12 +146,24 @@ La struttura adotta un approccio modulare per separare nettamente i dati, la pro
 
 ```
 .
-├── data/        # [NON COMMITTATA] File system locale per dataset (Lab, GenAI, Wild) divisi in train/val/test.
-├── models/      # Salvataggio dei pesi esportati post-training (.pt, .onnx, .tflite).
-├── notebooks/   # Jupyter Notebooks per EDA (Exploratory Data Analysis), test di inferenza e prototipazione script generativi.
-├── README.md    # Documentazione di progetto.
-└── src/         # Core logico del progetto Python.
-    ├── data_prep/      # Script per il download, la standardizzazione e l'augmentation/background replacement.
-    ├── training/       # Logica di addestramento PyTorch, configurazione iperparametri e validazione.
-    └── edge_inference/ # Codice ottimizzato per il deployment (OpenCV, inferenza ONNX/TFLite per Raspberry).
+├── data/              # [NON COMMITTATA] Dataset grezzi, organizzati e preprocessati.
+│   ├── raw/           # Immagini originali divise per sorgente (chula, masud, obb, bioscan, …)
+│   ├── organized_raw/ # Immagini copiate e rinominate nelle 4 cartelle di classe
+│   └── preprocessed/  # Output di preprocess_organized_data.py (224×224, CLAHE, letterbox)
+├── models/            # Pesi esportati post-training (.pt, .onnx, .tflite)
+├── notebooks/         # Jupyter Notebooks per EDA, prototipazione e analisi
+├── README.md
+└── src/               # Core logico del progetto — una cartella per fase di pipeline
+    ├── dataset_org/   # Download, organizzazione e labeling dei dati grezzi
+    │   ├── download_datasets.py           # Kaggle (Chula, Masud) + Zenodo (OBB)
+    │   ├── download_additional_datasets.py # Roboflow, Mendeley, Dryad
+    │   ├── download_bioscan.py            # Campionamento BIOSCAN-1M (non_zanzare)
+    │   └── organize_data.py              # Copia in organized_raw/ per classe
+    ├── data_loading/  # DataLoader PyTorch, split train/val/test, sampler
+    ├── preprocessing/ # Preprocessing offline delle immagini
+    │   └── preprocess_organized_data.py  # CLAHE + letterboxing + resize 224×224
+    ├── models/        # Definizione architetture, caricamento pesi, export ONNX/TFLite
+    ├── training/      # Training loop, ottimizzatori, scheduler, checkpoint
+    └── evaluation/    # Metriche, grafici, domain shift analysis
+        └── analyze_organized_raw_data.py # Distribuzione immagini per classe/dataset
 ```
