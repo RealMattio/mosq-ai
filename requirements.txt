@@ -6,8 +6,9 @@ torchaudio==2.5.1+cu124
 torchvision==0.20.1+cu124
 triton==3.1.0
 
-# Computer Vision
+# Computer Vision e ML
 opencv-python==4.13.0.92
+scikit-learn==1.8.0
 
 # Dati e ML
 numpy==2.4.2

@@ -141,6 +141,76 @@ python src/data_prep/organize_data.py
 
 **Nota sul dataset OBB:** le immagini contengono esclusivamente insetti non-zanzara e vengono usate come classe di rigetto `non_zanzare`. Le label OBB incluse nel dataset originale non vengono utilizzate in questa pipeline.
 
+## Esecuzione del Training
+
+### Prerequisiti
+
+1. **Ambiente conda attivo** con tutte le dipendenze installate:
+   ```bash
+   conda activate mosq-ai-env
+   pip install -r requirements.txt
+   ```
+
+2. **Dati preprocessati** presenti in `data/preprocessed/` (eseguire prima la pipeline di download e preprocessing descritta sopra).
+
+3. **PYTHONPYCACHEPREFIX** configurato nell'ambiente (già impostato se si usa `mosq-ai-env`):
+   ```bash
+   conda env config vars set PYTHONPYCACHEPREFIX=/path/to/mosq-ai/__pycache__ -n mosq-ai-env
+   conda activate mosq-ai-env
+   ```
+
+---
+
+### Configurazione
+
+Tutti i parametri di addestramento si trovano nel dizionario `config` in `src/main.py`:
+
+| Parametro | Descrizione | Valori supportati |
+|---|---|---|
+| `data_path` | Percorso ai dati preprocessati | path assoluto o relativo |
+| `allowed_datasets` | Filtra per sorgente dati (`[]` = tutti) | es. `["chula", "bioscan"]` |
+| `val_split` | Frazione dati per validation | es. `0.2` |
+| `norm_strategy` | Strategia di normalizzazione | `"imagenet"`, `"custom_z_score"`, `"custom_min_max"` |
+| `use_augmentation` | Abilita/disabilita data augmentation sul train set | `True`, `False` |
+| `model` | Architettura backbone | `resnet18`, `resnet50`, `efficientnetb0`, `mobilenetv2`, `mobilenet`, `nasnetmobile` |
+| `pretrained` | Usa pesi preaddestrati su ImageNet | `True`, `False` |
+| `freeze_pretrained_weights` | Congela il backbone e aggiunge head custom (GAP → Dropout → FC); se `False` esegue fine-tuning dell'intera rete | `True`, `False` |
+| `batch_size` | Dimensione del batch | es. `32` |
+| `learning_rate` | Learning rate dell'ottimizzatore Adam | es. `1e-3`, `1e-4` |
+| `epochs` | Numero massimo di epoche | es. `50` |
+| `patience` | Epoche senza miglioramento prima dell'early stopping | es. `10` |
+
+---
+
+### Avvio
+
+```bash
+conda activate mosq-ai-env
+python src/main.py
+```
+
+---
+
+### Output
+
+Al termine del training, tutti i risultati vengono salvati in:
+
+```
+saved_models/{model}_{timestamp}/
+├── config.json               — iperparametri del run
+├── best_model.pt             — pesi del modello con miglior F1 su validation
+├── training_history.json     — metriche epoch-by-epoch (loss, accuracy, F1)
+├── best_eval_data.npz        — probabilità e label del best checkpoint
+├── fold_1/
+│   ├── training_history.png  — curve loss e F1 (train vs val)
+│   ├── roc_curve.png         — ROC one-vs-rest per classe + macro average
+│   ├── confusion_matrix.png  — matrice di confusione normalizzata per riga
+│   └── metrics.json          — precision, recall, F1, support per classe e medie
+└── aggregate_metrics.json    — metriche aggregate (media ± std su tutti i fold)
+```
+
+---
+
 ## Organizzazione della Repository
 La struttura adotta un approccio modulare per separare nettamente i dati, la prototipazione, il codice di pipeline e gli artefatti generati.
 

@@ -4,3 +4,8 @@ CLAUDE.md
 .claude
 possible_dataset.txt
 tree.txt
+
+# Python bytecode (centralizzati in __pycache__/ nella root tramite PYTHONPYCACHEPREFIX)
+__pycache__/
+*.py[cod]
+*.pyo

@@ -1,0 +1,25 @@
+{
+  "data_path": "data/preprocessed",
+  "classes": [
+    "aedes",
+    "anopheles",
+    "culex",
+    "non_zanzare"
+  ],
+  "allowed_datasets": [
+    "chula",
+    "bioscan"
+  ],
+  "val_split": 0.2,
+  "seed": 42,
+  "num_workers": 4,
+  "norm_strategy": "imagenet",
+  "model": "mobilenetv2",
+  "pretrained": true,
+  "freeze_pretrained_weights": true,
+  "batch_size": 32,
+  "learning_rate": 0.001,
+  "epochs": 50,
+  "patience": 10,
+  "output_dir": "saved_models/mobilenetv2_20260310_172434"
+}

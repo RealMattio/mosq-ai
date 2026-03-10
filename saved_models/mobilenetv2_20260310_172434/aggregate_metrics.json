@@ -1,0 +1,59 @@
+{
+  "num_folds": 1,
+  "accuracy_mean": 0.8468,
+  "accuracy_std": 0.0,
+  "per_class": {
+    "aedes": {
+      "precision_mean": 0.8322,
+      "precision_std": 0.0,
+      "recall_mean": 0.8094,
+      "recall_std": 0.0,
+      "f1-score_mean": 0.8207,
+      "f1-score_std": 0.0,
+      "support_total": 5430
+    },
+    "anopheles": {
+      "precision_mean": 0.5987,
+      "precision_std": 0.0,
+      "recall_mean": 0.728,
+      "recall_std": 0.0,
+      "f1-score_mean": 0.6571,
+      "f1-score_std": 0.0,
+      "support_total": 1441
+    },
+    "culex": {
+      "precision_mean": 0.7615,
+      "precision_std": 0.0,
+      "recall_mean": 0.7231,
+      "recall_std": 0.0,
+      "f1-score_mean": 0.7418,
+      "f1-score_std": 0.0,
+      "support_total": 3536
+    },
+    "non_zanzare": {
+      "precision_mean": 0.9963,
+      "precision_std": 0.0,
+      "recall_mean": 0.9992,
+      "recall_std": 0.0,
+      "f1-score_mean": 0.9977,
+      "f1-score_std": 0.0,
+      "support_total": 5323
+    }
+  },
+  "macro_avg": {
+    "precision_mean": 0.7972,
+    "precision_std": 0.0,
+    "recall_mean": 0.8149,
+    "recall_std": 0.0,
+    "f1-score_mean": 0.8043,
+    "f1-score_std": 0.0
+  },
+  "weighted_avg": {
+    "precision_mean": 0.8504,
+    "precision_std": 0.0,
+    "recall_mean": 0.8468,
+    "recall_std": 0.0,
+    "f1-score_mean": 0.8479,
+    "f1-score_std": 0.0
+  }
+}
