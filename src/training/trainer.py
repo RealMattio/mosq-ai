@@ -211,7 +211,7 @@ class Trainer:
                 if self.epochs_no_improve >= self.patience:
                     print(f"\n[Early Stopping] Nessun miglioramento per {self.patience} epoche. Addestramento fermato.")
                     break
-
+            print("\n")
         # Salva la history delle epoche per tracciare le curve Loss/Accuracy
         with open(self.history_path, 'w') as f:
             json.dump(self.history, f, indent=4)
