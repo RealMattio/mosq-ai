@@ -1,0 +1,26 @@
+{
+  "data_path": "/home/mattio/Scrivania/mosq-ai/data/preprocessed",
+  "classes": [
+    "aedes",
+    "anopheles",
+    "culex",
+    "non_zanzare"
+  ],
+  "allowed_datasets": [
+    "chula",
+    "bioscan"
+  ],
+  "val_split": 0.2,
+  "seed": 42,
+  "num_workers": 4,
+  "norm_strategy": "imagenet",
+  "use_augmentation": false,
+  "model": "nasnetmobile",
+  "pretrained": true,
+  "freeze_pretrained_weights": false,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "epochs": 50,
+  "patience": 12,
+  "output_dir": "/home/mattio/Scrivania/mosq-ai/saved_models/nasnetmobile_20260311_181349"
+}

@@ -63,7 +63,7 @@ class MosquitoNet(nn.Module):
             "efficientnetb0": "efficientnet_b0",
             "mobilenet": "mobilenetv1_100",        # V1 classica
             "mobilenetv2": "mobilenetv2_100",      # V2 classica
-            "nasnetmobile": "nasnetamobile"
+            "nasnetmobile": "mnasnet_100"         # NASNet Mobile → MNASNet (timm non ha nasnetmobile)
         }
         if name not in mapping:
             raise ValueError(f"Modello '{name}' non supportato. Usa: {list(mapping.keys())}")
