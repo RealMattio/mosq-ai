@@ -1,0 +1,42 @@
+{
+  "fold": 1,
+  "accuracy": 0.9991,
+  "per_class": {
+    "aedes": {
+      "precision": 0.9987,
+      "recall": 0.9997,
+      "f1-score": 0.9992,
+      "support": 10859
+    },
+    "anopheles": {
+      "precision": 0.9997,
+      "recall": 1.0,
+      "f1-score": 0.9998,
+      "support": 2882
+    },
+    "culex": {
+      "precision": 0.9996,
+      "recall": 0.9972,
+      "f1-score": 0.9984,
+      "support": 7068
+    },
+    "non_zanzare": {
+      "precision": 0.999,
+      "recall": 1.0,
+      "f1-score": 0.9995,
+      "support": 5219
+    }
+  },
+  "macro_avg": {
+    "precision": 0.9992,
+    "recall": 0.9992,
+    "f1-score": 0.9992,
+    "support": 26028
+  },
+  "weighted_avg": {
+    "precision": 0.9991,
+    "recall": 0.9991,
+    "f1-score": 0.9991,
+    "support": 26028
+  }
+}

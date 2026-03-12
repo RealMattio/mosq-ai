@@ -164,7 +164,6 @@ class Trainer:
                 # 3. Aggiorniamo la barra. Uso il ciano (\033[36m) per la loss in modo che stacchi bene dal giallo
                 pbar.set_postfix({"val_loss": f"\033[36m{loss.item():.4f}\033[0m"})
 
-        print("\n")
         epoch_loss = running_loss / len(self.val_loader.dataset) # type: ignore
 
         epoch_acc = accuracy_score(all_targets, all_preds)
@@ -177,6 +176,7 @@ class Trainer:
         print(f"\n[Trainer] Inizio addestramento per massimo {self.epochs} epoche.")
         
         for epoch in range(1, self.epochs + 1):
+            print("\n" + "="*30 + f" Epoch {epoch:03d}/{self.epochs} " + "="*30)
             start_time = time.time()
             train_loss, train_acc, train_f1 = self.train_epoch()
             val_loss, val_acc, val_f1, val_probs, val_targets = self.validate_epoch()
@@ -211,7 +211,6 @@ class Trainer:
                 if self.epochs_no_improve >= self.patience:
                     print(f"\n[Early Stopping] Nessun miglioramento per {self.patience} epoche. Addestramento fermato.")
                     break
-            print("\n")
         # Salva la history delle epoche per tracciare le curve Loss/Accuracy
         with open(self.history_path, 'w') as f:
             json.dump(self.history, f, indent=4)

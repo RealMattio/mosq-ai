@@ -2,13 +2,17 @@
 Entry point principale per il progetto MOSQ-AI.
 Contiene la configurazione globale e avvia la Pipeline di addestramento.
 
-Esecuzione:
+Esecuzione standard (usa il modello di default):
     conda activate mosq-ai-env
     python src/main.py
+
+Esecuzione con modello specifico:
+    python src/main.py --model mobilenetv2
 """
 
 import os
 import sys
+import argparse
 from datetime import datetime
 
 # Radice del progetto (cartella che contiene src/, data/, saved_models/, ...)
@@ -19,11 +23,40 @@ if PROJECT_ROOT not in sys.path:
 from src.pipeline import Pipeline
 
 
+def parse_arguments():
+    """Configura l'interprete della linea di comando."""
+    parser = argparse.ArgumentParser(
+        description="Avvia la pipeline di addestramento MOSQ-AI."
+    )
+    
+    # Definiamo i modelli ammessi in una lista per passarla a 'choices'
+    allowed_models = [
+        "resnet18", 
+        "resnet50", 
+        "efficientnetb0", 
+        "mobilenetv2", 
+        "nasnetmobile", 
+        "mobilenet"
+    ]
+    
+    parser.add_argument(
+        "--model", 
+        type=str, 
+        default="resnet18", # Modello di default se non specifichi nulla
+        choices=allowed_models,
+        help=f"Specifica l'architettura da addestrare. Modelli ammessi: {', '.join(allowed_models)}."
+    )
+    
+    return parser.parse_args()
+
+
 def main():
+    # 1. Legge gli argomenti da terminale
+    args = parse_arguments()
+    model_name = args.model
+    
     # Timestamp generato all'avvio: identifica univocamente il run
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-
-    model_name = "resnet18"  # Scegli il modello da addestrare (resnet18, resnet50, efficientnetb0, mobilenetv2, nasnetmobile→mnasnet_100, mobilenet)
 
     # =========================================================================
     # DIZIONARIO DI CONFIGURAZIONE GLOBALE (Pannello di Controllo)
@@ -48,7 +81,6 @@ def main():
         "use_augmentation": False,
 
         # --- Modello ---
-        # Modelli supportati: resnet18, resnet50, efficientnetb0, mobilenetv2, nasnetmobile, mobilenet
         "model": model_name,
         "pretrained": True,
         "freeze_pretrained_weights": False,
@@ -63,6 +95,9 @@ def main():
         # La cartella del run è: saved_models/{model}_{timestamp}
         "output_dir": os.path.join(PROJECT_ROOT, "saved_models", f"{model_name}_{timestamp}"),
     }
+
+    print(f"Avvio addestramento per il modello: {model_name.upper()}")
+    print(f"I risultati saranno salvati in: {config['output_dir']}")
 
     # =========================================================================
     # ESECUZIONE
