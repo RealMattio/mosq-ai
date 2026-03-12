@@ -25,7 +25,7 @@ Tutti i modelli verranno prima addestrati su i dati provenienti da questi tre do
 
 ## Gestione e Download dei Dataset
 
-La cartella `data/` non è tracciata da Git. Il recupero dei dati avviene tramite script dedicati in `src/data_prep/`. La pipeline completa richiede tre passaggi in sequenza.
+La cartella `data/` non è tracciata da Git. Il recupero dei dati avviene tramite script dedicati in `src/dataset_org/`. La pipeline completa richiede tre passaggi in sequenza.
 
 ---
 
@@ -35,7 +35,7 @@ Scarica i dataset di base: Chula (Kaggle), Masud (Kaggle) e OBB (Zenodo).
 
 ```bash
 conda activate mosq-ai-env
-python src/data_prep/download_datasets.py
+python src/dataset_org/download_datasets.py
 ```
 
 **Prerequisiti Kaggle:** creare il file `~/.kaggle/kaggle.json` con le proprie credenziali.
@@ -53,7 +53,7 @@ Scarica dataset supplementari per le classi minoritarie (`anopheles`, `culex`, `
 
 ```bash
 conda activate mosq-ai-env
-python src/data_prep/download_additional_datasets.py --roboflow-key <API_KEY>
+python src/dataset_org/download_additional_datasets.py --roboflow-key <API_KEY>
 ```
 
 **Prerequisiti Roboflow:** ottenere una API key gratuita.
@@ -75,7 +75,7 @@ Una volta scaricati gli ZIP di Mendeley e Dryad, estrarli nelle cartelle organiz
 
 ```bash
 conda activate mosq-ai-env
-python src/data_prep/download_additional_datasets.py --skip-mendeley  # solo Roboflow
+python src/dataset_org/download_additional_datasets.py --skip-mendeley  # solo Roboflow
 # Gli ZIP vengono estratti automaticamente se presenti in data/raw/
 ```
 
@@ -91,7 +91,7 @@ Scarica immagini di insetti non-zanzara dal dataset [BIOSCAN-1M](https://zenodo.
 
 ```bash
 conda activate mosq-ai-env
-python src/data_prep/download_bioscan.py [--workers 6] [--seed 42]
+python src/dataset_org/download_bioscan.py [--workers 6] [--seed 42]
 ```
 
 Nessuna credenziale richiesta. Il download riprende automaticamente da dove si è interrotto. I file intermedi vengono messi in cache in `data/raw/bioscan/`:
@@ -106,7 +106,7 @@ Dopo aver completato i download, organizzare tutte le immagini nelle 4 cartelle 
 
 ```bash
 conda activate mosq-ai-env
-python src/data_prep/organize_data.py
+python src/dataset_org/organize_data.py
 ```
 
 ---
