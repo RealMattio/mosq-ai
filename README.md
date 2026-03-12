@@ -141,6 +141,21 @@ python src/dataset_org/organize_data.py
 
 **Nota sul dataset OBB:** le immagini contengono esclusivamente insetti non-zanzara e vengono usate come classe di rigetto `non_zanzare`. Le label OBB incluse nel dataset originale non vengono utilizzate in questa pipeline.
 
+## Modelli Disponibili
+
+I backbone supportati sono selezionabili tramite il parametro `model` in `src/main.py`. Tutti vengono caricati tramite [timm](https://github.com/huggingface/pytorch-image-models) e supportano pesi preaddestrati su ImageNet.
+
+| Nome (`model`) | Architettura timm | Parametri | Peso fp32 | Note |
+|---|---|---|---|---|
+| `resnet18` | `resnet18` | 11.2M | ~43 MB | Baseline leggero, buon compromesso velocità/accuratezza |
+| `resnet50` | `resnet50` | 23.5M | ~90 MB | Più accurato di ResNet18, ma pesante per edge |
+| `efficientnetb0` | `efficientnet_b0` | 4.0M | ~15 MB | Efficiente e accurato, buona scelta per edge |
+| `mobilenet` | `mobilenetv1_100` | 3.2M | ~12 MB | MobileNet V1 classico, molto leggero |
+| `mobilenetv2` | `mobilenetv2_100` | 2.2M | ~9 MB | Architettura più moderna di V1, ottimale per Raspberry Pi |
+| `nasnetmobile` | `mnasnet_100` | 3.1M | ~12 MB | MNASNet (NAS mobile-optimized), alternativa a NASNet Mobile |
+
+> **Nota:** il peso in memoria si riferisce ai soli parametri float32. In inferenza (con buffer, attivazioni, I/O immagine) l'occupazione RAM è superiore. Per Raspberry Pi Zero 2 W (512 MB RAM) si raccomanda `mobilenetv2` o `mobilenet`.
+
 ## Esecuzione del Training
 
 ### Prerequisiti

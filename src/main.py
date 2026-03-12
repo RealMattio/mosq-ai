@@ -23,7 +23,7 @@ def main():
     # Timestamp generato all'avvio: identifica univocamente il run
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    model_name = "mobilenetv2"
+    model_name = "resnet18"  # Scegli il modello da addestrare (resnet18, resnet50, efficientnetb0, mobilenetv2, nasnetmobile→mnasnet_100, mobilenet)
 
     # =========================================================================
     # DIZIONARIO DI CONFIGURAZIONE GLOBALE (Pannello di Controllo)
